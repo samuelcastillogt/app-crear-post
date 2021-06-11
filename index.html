@@ -17,9 +17,14 @@
 </header>
 
 <div id="containerBlog"></div>
-<script>
-  
-    </script>
+<div class="opciones">
+<div class="section" id="crear" onclick="crear()">
+    <p>Crear un Post</p>
+</div>
+<div class="section" id="crear" onclick="editar()">
+    <p>Editar un Post</p>
+</div>
+</div>
     <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
@@ -74,7 +79,12 @@ firebase.auth().onAuthStateChanged((user) => {
     })
   }
 });
-    
+    function crear(){
+        window.location.href="/app/crear.html"
+    }
+    function editar(){
+        window.location.href="/app/editar.html"
+    }
        
     </script>
 </body>
