@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <title>Crear entrada</title>
+</head>
+<body>
+    <header>
+        <span>App Blogs</span>
+        <ul>
+            <li id="login">Login</li>
+            <li class="hidden" id="singout">Salir</li>
+        </ul>
+    </header>
+    <div id="este"></div>
+    <section class="main">
+    <div class="form-container">
+        <h2>Crear tu entrada</h2>
+        <div class="form-item">
+            <label for="">Titulo</label>
+            <input type="text" id="titulo" placeholder="Crea un titulo atractivo">
+        </div>
+        <div class="form-item">
+            <label for="">Cuerpo</label>
+            <textarea name="" id="cuerpo" cols="" rows="30" class="tex"></textarea>
+        </div>
+
+    </div>
+    <div class="sidebar">
+        <div class="form-item">
+            <label for="">Categoria</label>
+            <select name="" id="categoria">
+                <option value="Rock">Rock</option>
+                <option value="Romanticas">Romanticas</option>
+                <option value="Clasicas">Clasicas</option>
+                <option value="Noticias">Noticias</option>
+                <option value="Reviews">Reviews</option>
+                <option value="Raro Mundo">Raro Mundo</option>
+                <option value="Youtube">Youtube</option>
+            </select>
+        </div>
+        <div class="form-item">
+            <label for="">MetaDescripcion</label>
+            <textarea name="" id="metadesc" cols="" rows="" class="tex"></textarea>
+        </div>
+        <div class="form-item">
+            <label for="">Slug</label>
+            <input type="text" id="slug" placeholder="Sin espacios">
+        </div>
+        <div class="form-item">
+            <button id="guardar">Crear</button>
+        </div>
+        <div class="form-item">
+            <label for="">Subir imagen</label>
+            <input type="file" id="file">
+        </div>
+        <div class="form-item">
+            <label for="">Imagen Destacada</label>
+            <input type="file" id="file2" >
+            <input type="hidden" id="imgDes">
+            <div id="previa"></div>
+        </div>
+        
+    </div>
+   
+</section>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-storage.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/sceditor.min.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>
+        var textarea = document.getElementById('cuerpo');
+sceditor.create(textarea, {
+	format: 'xhtml',
+	style: 'https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/content/default.min.css'
+});
+          var firebaseConfig = {
+    apiKey: "AIzaSyDSSeuU8iHnoN3ucTzTFhfn6GylKIqasL0",
+    authDomain: "escuela-32bef.firebaseapp.com",
+    databaseURL: "https://escuela-32bef.firebaseio.com",
+    projectId: "escuela-32bef",
+    storageBucket: "escuela-32bef.appspot.com",
+    messagingSenderId: "913904034443",
+    appId: "1:913904034443:web:822c99f3fdd229fddbea8e",
+    measurementId: "G-K2VS202KHJ"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  document.getElementById("guardar").addEventListener("click", ()=>{
+    var instance = sceditor.instance(textarea);
+const imagen = document.getElementById("titulo").value
+;
+      const titulo = document.getElementById("titulo").value
+      const cuerpo = sceditor.instance(textarea).val();
+      const slug = document.getElementById("slug").value
+      const metadesc = document.getElementById("metadesc").value
+      const imgDes = document.getElementById("imgDes").value
+      const categoria = document.getElementById("categoria").value
+      
+    var db = firebase.firestore();
+    db.collection("blog").doc(slug).set({
+   titulo : titulo,
+   cuerpo: cuerpo,
+   metadesc: metadesc,
+   imgDes: imgDes,
+   slug: slug, 
+   categoria: categoria
+})
+.then((docRef) => {
+    console.log("Document written with ID: ", docRef.id);
+    document.getElementById("este").innerHTML="ya"
+})
+.catch((error) => {
+    console.error("Error adding document: ", error);
+});
+console.log(cuerpo)
+  })
+  const imagen= document.getElementById('file')
+  const imagen2= document.getElementById('file2')
+imagen.addEventListener('change', function(evento){
+    evento.preventDefault();
+   
+    var archivo  = evento.target.files[0];
+   
+    subirArchivo(archivo);
+   });
+   imagen2.addEventListener('change', function(evento){
+    evento.preventDefault();
+   
+    var archivo  = evento.target.files[0];
+   
+    subirArchivo2(archivo);
+   });
+function subirArchivo(archivo) {
+    const storageService= firebase.storage();
+    const ruta = storageService.ref('img-post').child(archivo.name);
+    var uploadTask = ruta.put(archivo);
+    uploadTask.on('state_changed', function(snapshot){
+       // Observe state change events such as progress, pause, and resume
+       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+       var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+       console.log('Upload is ' + progress + '% done');
+       document.getElementById("previa").innerHTML=`<p class="h2">Subida: ${progress.toFixed(2)}%`
+       switch (snapshot.state) {
+         case firebase.storage.TaskState.PAUSED: // or 'paused'
+           console.log('Upload is paused');
+           break;
+         case firebase.storage.TaskState.RUNNING: // or 'running'
+           console.log('Upload is running');
+           break;
+       }
+     }, function(error) {
+       // Handle unsuccessful uploads
+     }, function() {
+       // Handle successful uploads on complete
+       // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+       uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+         console.log('File available at', downloadURL);
+         var instance = sceditor.instance(textarea);
+         instance.insert(`<br><img src="${downloadURL}"/><br>`)
+        //  document.getElementById("previa").innerHTML=`<img class="img-previa" img-previa src="${downloadURL}">`
+        //  document.getElementById("imagen").value = downloadURL
+       });
+     });
+    }
+
+    function subirArchivo2(archivo) {
+    const storageService= firebase.storage();
+    const ruta = storageService.ref('img-post').child(archivo.name);
+    var uploadTask = ruta.put(archivo);
+    uploadTask.on('state_changed', function(snapshot){
+       // Observe state change events such as progress, pause, and resume
+       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+       var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+       console.log('Upload is ' + progress + '% done');
+       document.getElementById("previa").innerHTML=`<p class="h2">Subida: ${progress.toFixed(2)}%`
+       switch (snapshot.state) {
+         case firebase.storage.TaskState.PAUSED: // or 'paused'
+           console.log('Upload is paused');
+           break;
+         case firebase.storage.TaskState.RUNNING: // or 'running'
+           console.log('Upload is running');
+           break;
+       }
+     }, function(error) {
+       // Handle unsuccessful uploads
+     }, function() {
+       // Handle successful uploads on complete
+       // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+       uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+         console.log('File available at', downloadURL);
+         imagen2.classList.add("hidden")
+         document.getElementById("imgDes").value =downloadURL
+        document.getElementById("previa").innerHTML=`<img class="img-previa" img-previa src="${downloadURL}">`
+        //  document.getElementById("imagen").value = downloadURL
+       });
+     });
+    }
+  </script>
+</body>
+</html>

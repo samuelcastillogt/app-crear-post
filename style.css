@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+header{
+    display: flex;
+    justify-content: space-around;
+    background: lightblue;
+    padding: 20px;
+}
+.hidden{
+    display: none;
+}
+#cuerpo{
+    width: 90%;
+    height: 300px;
+}
+.form-container{
+    width: 60%;
+}
+.sidebar{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+.main{
+    display: flex;
+    
+}
+#previa{
+    width: 90px;
+    
+}
