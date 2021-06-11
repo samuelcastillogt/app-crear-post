@@ -119,7 +119,7 @@ function subirArchivo(archivo) {
          console.log('File available at', downloadURL);
          imagen2.classList.add("hidden")
          
-        document.getElementById("previa").innerHTML=`<img class="img-previa" img-previa src="${downloadURL}">`
+        document.getElementById("previa2").innerHTML=`<img class="img-previa" img-previa src="${downloadURL}">`
           document.getElementById("img").value = downloadURL
        });
      });
