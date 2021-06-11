@@ -24,6 +24,9 @@
 <div class="section" id="crear" onclick="editar()">
     <p>Editar un Post</p>
 </div>
+<div class="section" id="crear" onclick="podcast()">
+  <p>Crear Podcast</p>
+</div>
 </div>
     <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
@@ -85,7 +88,9 @@ firebase.auth().onAuthStateChanged((user) => {
     function editar(){
         window.location.href="/app/editar.html"
     }
-       
+    function podcast(){
+        window.location.href="/app/podcast.html"
+    }  
     </script>
 </body>
 </html>
