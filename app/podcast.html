@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <title>Crear entrada</title>
+</head>
+<body>
+    <header>
+        <span>App Blogs</span>
+        <ul>
+            <li id="login">Login</li>
+            <li class="hidden" id="singout">Salir</li>
+        </ul>
+    </header>
+    <div id="este"></div>
+    <section class="main">
+    <div class="form-container">
+        <h2>Crear tu entrada</h2>
+        <div class="form-item">
+            <label for="">Titulo</label>
+            <input type="text" id="titulo" placeholder="Crea un titulo atractivo">
+        </div>
+        <div class="form-item">
+            <label for="">Cuerpo</label>
+            <textarea name="" id="cuerpo" cols="" rows="30" class="tex"></textarea>
+        </div>
+
+    </div>
+    <div class="sidebar">
+        <div class="form-item">
+            <button id="guardar">Crear</button>
+        </div>
+       
+        <div class="form-item">
+            <label for="">MetaDescripcion</label>
+            <textarea name="" id="metadesc" cols="" rows="" class="tex"></textarea>
+        </div>
+        <div class="form-item">
+            <label for="">Slug</label>
+            <input type="text" id="slug" placeholder="Sin espacios">
+        </div>
+      
+        <div class="form-item">
+            <label for="">Subir Audio</label>
+            <input type="file" id="file">
+            <div id="previa"></div>
+        </div>
+        <div class="form-item">
+            <label for="">Portada del Podcast</label>
+            <input type="file" id="file2" >
+            <input type="hidden" id="audio">
+            <input type="hidden" id="img">
+            <div id="previa"></div>
+        </div>
+        
+    </div>
+   
+</section>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-storage.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/sceditor.min.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="podcast.js">
+      
+  </script>
+</body>
+</html>
