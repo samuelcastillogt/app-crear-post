@@ -101,7 +101,7 @@ function subirArchivo(archivo) {
        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
        console.log('Upload is ' + progress + '% done');
-       document.getElementById("previa").innerHTML=`<p class="h2">Subida: ${progress.toFixed(2)}%`
+       document.getElementById("previa2").innerHTML=`<p class="h2">Subida: ${progress.toFixed(2)}%`
        switch (snapshot.state) {
          case firebase.storage.TaskState.PAUSED: // or 'paused'
            console.log('Upload is paused');
